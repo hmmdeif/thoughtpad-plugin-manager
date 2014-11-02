@@ -11,10 +11,11 @@
   },
   "devDependencies": {
     "should": "~3.3.2",
-    "proxyquire": "~1.0.1"
+    "proxyquire": "~1.0.1",
+    "mocha": "~1.21.4"
   },
   "main": "./src/main.js",
   "scripts": {
-    "test": "mocha --harmony-generators ./test/test.js"
+    "test": "node ./node_modules/mocha/bin/mocha --harmony-generators ./test/test.js"
   }
 }
