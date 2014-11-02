@@ -1,0 +1,20 @@
+{
+  "name": "thoughtpad-plugin-manager",
+  "version": "0.0.1",
+  "description": "https://github.com/hmmdeif/thoughtpad-plugin-manager.git",
+  "engines": {
+    "node": "0.11",
+    "npm": "1.4"
+  },
+  "dependencies": {
+    "co": "~3.1.0"
+  },
+  "devDependencies": {
+    "should": "~3.3.2",
+    "proxyquire": "~1.0.1"
+  },
+  "main": "./src/main.js",
+  "scripts": {
+    "test": "mocha --harmony-generators ./test/test.js"
+  }
+}
