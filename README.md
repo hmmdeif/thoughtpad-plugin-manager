@@ -9,7 +9,7 @@ A plugin is a very simple object that must implement a single `init` function wh
 
 The manager will return a `subscribe` and `notify` function after registering all plugins once the contents of a `package.json` file has been passed as the argument. This allows the application to call any subscribed event with arguments even if it is not being subscribed to.
 
-```
+```JavaScript
 var man = require('thoughtpad-plugin-manager');
 
 var thoughtpad = man.registerPlugins(require('./package.json'));
@@ -21,7 +21,7 @@ thoughtpad.notify("an-event", { data: "some data" });
 
 ## Example Plugins
 
-```
+```JavaScript
 var _thoughtpad;
 
 var init = function (thoughtpad) {
