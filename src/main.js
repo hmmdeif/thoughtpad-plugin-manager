@@ -30,6 +30,8 @@ registerPlugins = function (modules) {
     var i = 0,
         len = modules.length;
 
+    subscribedEvents = [];
+
     for (i; i < len; i++) {
         // Initialise all the modules that have been passed
         modules[i].init(thoughtpad);
