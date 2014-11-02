@@ -24,16 +24,15 @@ thoughtpad = {
     notify: notify
 },
 
-registerPlugins = function (contents) {
-    var packageName;
+registerPlugins = function (modules) {
+    if (!modules) return;
 
-    if (!contents) return;
+    var i = 0,
+        len = modules.length;
 
-    for (packageName in contents.dependencies) {
-        // Only find thoughtpad plugins in the package.json file
-        if (packageName.indexOf("thoughtpad-plugin") > -1) {
-            require(packageName).init(thoughtpad);
-        }
+    for (i; i < len; i++) {
+        // Initialise all the modules that have been passed
+        modules[i].init(thoughtpad);
     }
     return thoughtpad;
 };

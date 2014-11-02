@@ -1,7 +1,0 @@
-{
-    "dependencies": {
-        "./../test/thoughtpad-plugin-example": "0.0.1",
-        "./../non-thoughtpad-example": "0.0.1",
-        "./../test/thoughtpad-plugin-example2": "0.0.1"
-    }
-}

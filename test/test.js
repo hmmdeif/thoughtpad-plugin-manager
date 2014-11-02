@@ -1,12 +1,12 @@
 var should = require('should'),
     app = require('./../src/main'),
+    example1 = require('./thoughtpad-plugin-example'),
+    example2 = require('./thoughtpad-plugin-example'),
     thoughtpad;
 
 describe("registering plugins", function () {
-    it("should require thoughtpad plugin", function () {
-        var contents = require("./package.json");
-
-        thoughtpad = app.registerPlugins(contents);
+    it("should correct subscribe to thoughtpad events", function () {
+        thoughtpad = app.registerPlugins([example1]);
         thoughtpad.subscribe("complete-event", function *(res) {
             res.should.equal("done");
         });
@@ -14,10 +14,8 @@ describe("registering plugins", function () {
         thoughtpad.notify("an-event");
     });
 
-    it("should require multiple thoughtpad plugins", function () {
-        var contents = require("./package.json");
-
-        thoughtpad = app.registerPlugins(contents);
+    it("should correctly subscribe to multiple thoughtpad plugins", function () {
+        thoughtpad = app.registerPlugins([example1, example2]);
         thoughtpad.subscribe("complete-event2", function *(res) {
             res.should.equal("done");
         });
@@ -25,14 +23,4 @@ describe("registering plugins", function () {
         thoughtpad.notify("an-event2");
     });
 
-    it("should not require non-thoughtpad plugins", function () {
-        var contents = require("./package.json");
-
-        thoughtpad = app.registerPlugins(contents);
-        thoughtpad.subscribe("complete-event3", function *(res) {
-            true.should.be.false; // Should never get here
-        });
-
-        thoughtpad.notify("an-event3");
-    });
 });
