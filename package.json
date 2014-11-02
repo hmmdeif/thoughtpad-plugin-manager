@@ -11,12 +11,13 @@
   },
   "devDependencies": {
     "should": "~3.3.2",
-    "proxyquire": "~1.0.1",
     "mocha": "~1.21.4",
-    "istanbul-harmony": "~0.3.0"
+    "coveralls": "~2.11.2",
+    "blanket": "~1.1.5",
+    "mocha-lcov-reporter": "0.0.1"
   },
   "main": "./src/main.js",
   "scripts": {
-    "test": "node --harmony ./node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "test": "node --harmony ./node_modules/mocha/bin/mocha --harmony-generators --require blanket --require mocha-lcov-reporter | ./node_modules/coveralls/bin/coveralls.js"
   }
 }
