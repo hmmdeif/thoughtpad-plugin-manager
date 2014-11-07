@@ -5,16 +5,14 @@ var subscribe = function (name, callback) {
     subscribedEvents.push({"name": name, "callback": callback});
 },
 
-notify = function (name, res) {
+notify = function *(name, res) {
     var i = 0,
         len = subscribedEvents.length;
 
     for (i; i < len; i++) {
         // Find all subscribed events and call them in turn
         if (subscribedEvents[i].name.toLowerCase() === name.toLowerCase()) {
-            co(function *() {
-                yield subscribedEvents[i].callback(res);
-            })();
+            yield subscribedEvents[i].callback(res);
         } 
     }
 },

@@ -6,7 +6,7 @@ var init = function (thoughtpad) {
 },
 
 doStuff = function *(contents) {
-    _thoughtpad.notify("complete-event3", "done");
+    yield _thoughtpad.notify("complete-event3", "done");
 };
 
 module.exports = {
