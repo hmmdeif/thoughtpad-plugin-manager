@@ -22,13 +22,14 @@ thoughtpad = {
     notify: notify
 },
 
-registerPlugins = function (modules) {
+registerPlugins = function (modules, config) {
     if (!modules) return;
 
     var i = 0,
         len = modules.length;
 
     subscribedEvents = [];
+    thoughtpad.config = config;
 
     for (i; i < len; i++) {
         // Initialise all the modules that have been passed
