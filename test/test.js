@@ -7,25 +7,31 @@ var should = require('should'),
     thoughtpad;
 
 describe("registering plugins", function () {
-    it("should correct subscribe to thoughtpad events", function () {
+    it("should correct subscribe to thoughtpad events", function (done) {
         thoughtpad = app.registerPlugins([example1]);
         thoughtpad.subscribe("complete-event", function *(res) {
             res.should.equal("done");
         });
 
-        thoughtpad.notify("an-event");
+        co(function *() {
+            yield thoughtpad.notify("an-event");
+            done();
+        })();
     });
 
-    it("should correctly subscribe to multiple thoughtpad plugins", function () {
+    it("should correctly subscribe to multiple thoughtpad plugins", function (done) {
         thoughtpad = app.registerPlugins([example1, example2]);
         thoughtpad.subscribe("complete-event2", function *(res) {
             res.should.equal("done");
         });
 
-        thoughtpad.notify("an-event2");
+        co(function *() {
+            yield thoughtpad.notify("an-event2");
+            done();
+        })();
     });
 
-    it("should reset all subscriptions on registration", function () {
+    it("should reset all subscriptions on registration", function (done) {
         var count = 0;
         thoughtpad = app.registerPlugins([example1, example2]);
 
@@ -34,7 +40,34 @@ describe("registering plugins", function () {
             count.should.equal(1);
         });
 
-        thoughtpad.notify("an-event2");
+        co(function *() {
+            yield thoughtpad.notify("an-event2");
+            done();
+        })();
+    });
+
+    it("should reset config object", function (done) {
+        thoughtpad = app.registerPlugins([example1]);
+        thoughtpad.config = 'hello';
+
+        thoughtpad.subscribe("complete-event", function *(res) {
+            thoughtpad.config.should.equal('hello');
+        });
+
+        co(function *() {
+            yield thoughtpad.notify("an-event");
+        })();
+
+        thoughtpad = app.registerPlugins([example1]);
+        thoughtpad.subscribe("complete-event", function *(res) {
+            (undefined === thoughtpad.config).should.be.true;
+        });
+
+        co(function *() {
+            yield thoughtpad.notify("an-event");
+            done();
+        })();
+
     });
 
     it("should yield once all the subscribers have completed", function (done) {
