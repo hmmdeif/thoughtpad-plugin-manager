@@ -14,7 +14,9 @@ notify = function *(name, res) {
             contents: res
         };
     } else {
-        res = {} || res;
+        if (res === undefined || typeof res !== 'object') {
+          res = {};
+        }
     }
     res.thoughtpad = this;
 
