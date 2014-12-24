@@ -10,6 +10,8 @@ A plugin is a very simple object that must implement a single `init` function wh
 
 The manager will return a `subscribe` and `notify` function after registering all plugins that have been passed for initialisation. This allows the application to call any subscribed event with arguments even if it is not being subscribed to.
 
+If you pass a string to the `notify` data object, then it wil be converted to an object and the string can be found in `data.contents`. This is because the thoughtpad object is added locally to your data object so you can use the config files and notify functions.
+
 ```JavaScript
 var man = require('thoughtpad-plugin-manager');
 
@@ -23,19 +25,15 @@ thoughtpad.notify("an-event", { data: "some data" });
 ## Example Plugins
 
 ```JavaScript
-var _thoughtpad;
-
 var init = function (thoughtpad) {
-    _thoughtpad = thoughtpad;
 
     // You should generally subscribe to all the plugin events here
-    _thoughtpad.subscribe("an-event", doStuff);
+    thoughtpad.subscribe("an-event", doStuff);
 },
 
-doStuff = function *(contents) {
-    // Do some stuff here, and once you're done you can optionally notify completion of the 
-    // event if it is necessary to do so...
-    _thoughtpad.notify("complete-event", "done");
+doStuff = function *(obj) {
+    // The thoughtpad obj will get added to whatever you pass in
+    obj.thoughtpad.notify("complete-event", "done");
 };
 
 module.exports = {

@@ -10,7 +10,7 @@ describe("registering plugins", function () {
     it("should correct subscribe to thoughtpad events", function (done) {
         thoughtpad = app.registerPlugins([example1]);
         thoughtpad.subscribe("complete-event", function *(res) {
-            res.should.equal("done");
+            res.contents.should.equal("done");
         });
 
         co(function *() {
@@ -22,7 +22,7 @@ describe("registering plugins", function () {
     it("should correctly subscribe to multiple thoughtpad plugins", function (done) {
         thoughtpad = app.registerPlugins([example1, example2]);
         thoughtpad.subscribe("complete-event2", function *(res) {
-            res.should.equal("done");
+            res.contents.should.equal("done");
         });
 
         co(function *() {
@@ -76,12 +76,12 @@ describe("registering plugins", function () {
 
         thoughtpad = app.registerPlugins([example1, example2]);
         thoughtpad.subscribe("complete-event2", function *(res) {
-            res.should.equal("done");
+            res.contents.should.equal("done");
             count++;
         });
 
         thoughtpad.subscribe("complete-event", function *(res) {            
-            res.should.equal("done");            
+            res.contents.should.equal("done");            
             yield fs.writeFile(filename, "text");
             yield fs.unlink(filename);           
             count++;  

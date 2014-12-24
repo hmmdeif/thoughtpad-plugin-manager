@@ -9,6 +9,15 @@ notify = function *(name, res) {
     var i = 0,
         len = subscribedEvents.length;
 
+    if (typeof res === "string") {
+        res = {
+            contents: res
+        };
+    } else {
+        res = {} || res;
+    }
+    res.thoughtpad = this;
+
     for (i; i < len; i++) {
         // Find all subscribed events and call them in turn
         if (subscribedEvents[i].name.toLowerCase() === name.toLowerCase()) {

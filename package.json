@@ -1,10 +1,14 @@
 {
   "name": "thoughtpad-plugin-manager",
   "version": "0.0.1",
-  "description": "https://github.com/hmmdeif/thoughtpad-plugin-manager.git",
+  "description": "Plugin manager for thoughtpad",
   "engines": {
-    "node": "0.11",
-    "npm": "1.4"
+    "node": "0.11.14",
+    "npm": "2.0.0"
+  },
+  "repository" : { 
+    "type" : "git", 
+    "url" : "https://github.com/hmmdeif/thoughtpad-plugin-manager.git"
   },
   "dependencies": {
     "co": "~3.1.0"
