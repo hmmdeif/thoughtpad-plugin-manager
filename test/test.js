@@ -36,35 +36,27 @@ describe("registering plugins", function () {
         thoughtpad = app.registerPlugins([example1, example2]);
 
         thoughtpad.subscribe("complete-event2", function *(res) {
-            count++;
-            count.should.equal(1);
+            count++;            
         });
 
         co(function *() {
             yield thoughtpad.notify("an-event2");
+            count.should.equal(1);
             done();
         })();
     });
 
     it("should reset config object", function (done) {
-        thoughtpad = app.registerPlugins([example1]);
-        thoughtpad.config = 'hello';
+        thoughtpad = app.registerPlugins([example1], 'hello');
 
-        thoughtpad.subscribe("complete-event", function *(res) {
+        co(function *() {
+            yield thoughtpad.notify("an-event");
             thoughtpad.config.should.equal('hello');
-        });
 
-        co(function *() {
+            thoughtpad = app.registerPlugins([example1]);
+
             yield thoughtpad.notify("an-event");
-        })();
-
-        thoughtpad = app.registerPlugins([example1]);
-        thoughtpad.subscribe("complete-event", function *(res) {
-            (undefined === thoughtpad.config).should.be.true;
-        });
-
-        co(function *() {
-            yield thoughtpad.notify("an-event");
+            thoughtpad.config.should.eql({});
             done();
         })();
 
@@ -91,6 +83,23 @@ describe("registering plugins", function () {
             yield thoughtpad.notify("an-event");
             yield thoughtpad.notify("an-event2");
             count.should.equal(3);
+            done();
+        })();
+    });
+
+    it("should unsubscribe to multiple thoughtpad plugins", function (done) {
+        var contents = "unsubbed";
+
+        thoughtpad = app.registerPlugins([example1, example2]);
+        thoughtpad.subscribe("complete-event2", function *(res) {
+            contents = res.contents;
+        });
+
+        thoughtpad.unsubscribe('complete-event2');
+
+        co(function *() {
+            yield thoughtpad.notify("an-event2");
+            contents.should.equal("unsubbed")
             done();
         })();
     });

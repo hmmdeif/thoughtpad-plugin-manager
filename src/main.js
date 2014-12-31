@@ -1,13 +1,12 @@
-var co = require('co'),
-    subscribedEvents = [];
+var co = require('co');
 
 var subscribe = function (name, callback) {
-    subscribedEvents.push({"name": name, "callback": callback});
+    this.subscribedEvents.push({"name": name, "callback": callback});
 },
 
 notify = function *(name, res) {
     var i = 0,
-        len = subscribedEvents.length;
+        len = this.subscribedEvents.length;
 
     if (typeof res === "string") {
         res = {
@@ -22,15 +21,31 @@ notify = function *(name, res) {
 
     for (i; i < len; i++) {
         // Find all subscribed events and call them in turn
-        if (subscribedEvents[i].name.toLowerCase() === name.toLowerCase()) {
-            yield subscribedEvents[i].callback(res);
+        if (this.subscribedEvents[i].name.toLowerCase() === name.toLowerCase()) {
+            yield this.subscribedEvents[i].callback(res);
         } 
     }
 },
 
+unsubscribe = function (name) {
+    var i = 0,
+        len = this.subscribedEvents.length,
+        newSubscribedEvents = [];
+
+    for (i; i < len; i++) {
+        // Find all subscribed events and remove any matching the name
+        if (this.subscribedEvents[i].name.toLowerCase() !== name.toLowerCase()) {
+            newSubscribedEvents.push(this.subscribedEvents[i]);
+        }
+    }
+    this.subscribedEvents = newSubscribedEvents;
+},
+
 thoughtpad = {
     subscribe: subscribe,
-    notify: notify
+    notify: notify,
+    unsubscribe: unsubscribe,
+    subscribedEvents: []
 },
 
 registerPlugins = function (modules, config) {
@@ -39,8 +54,8 @@ registerPlugins = function (modules, config) {
     var i = 0,
         len = modules.length;
 
-    subscribedEvents = [];
-    thoughtpad.config = config;
+    thoughtpad.subscribedEvents = [];
+    thoughtpad.config = config || {};
 
     for (i; i < len; i++) {
         // Initialise all the modules that have been passed
