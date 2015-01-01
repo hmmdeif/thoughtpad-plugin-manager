@@ -1,7 +1,10 @@
-var co = require('co');
+var subscribe = function (name, localName, callback) {
+    if (!callback) {
+        callback = localName;
+        localName = name;
+    }
 
-var subscribe = function (name, callback) {
-    this.subscribedEvents.push({"name": name, "callback": callback});
+    this.subscribedEvents.push({"name": name, "callback": callback, localName: localName});
 },
 
 notify = function *(name, res) {
@@ -27,14 +30,19 @@ notify = function *(name, res) {
     }
 },
 
-unsubscribe = function (name) {
+unsubscribe = function (name, localName) {
     var i = 0,
         len = this.subscribedEvents.length,
         newSubscribedEvents = [];
 
+    if (!localName) {
+        localName = name;
+    }
+
     for (i; i < len; i++) {
         // Find all subscribed events and remove any matching the name
-        if (this.subscribedEvents[i].name.toLowerCase() !== name.toLowerCase()) {
+        if (!(this.subscribedEvents[i].name.toLowerCase() === name.toLowerCase() && 
+            this.subscribedEvents[i].localName.toLowerCase() === localName.toLowerCase())) {
             newSubscribedEvents.push(this.subscribedEvents[i]);
         }
     }

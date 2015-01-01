@@ -104,5 +104,27 @@ describe("registering plugins", function () {
         })();
     });
 
+    it("should unsubscribe to specific thoughtpad plugins", function (done) {
+        var contents = "unsubbed";
+
+        thoughtpad = app.registerPlugins([example1, example2]);
+        thoughtpad.subscribe("complete-event2", "local", function *(res) {
+            contents = res.contents;
+        });
+
+        thoughtpad.unsubscribe('complete-event2', 'otherLocal');
+
+        co(function *() {
+            yield thoughtpad.notify("an-event2");
+            contents.should.equal("done");
+            contents = "unsubbed";
+            thoughtpad.unsubscribe('complete-event2', 'local');
+            yield thoughtpad.notify("an-event2");
+            contents.should.equal("unsubbed");
+            done();
+        })();
+    });
+
+
 
 });
