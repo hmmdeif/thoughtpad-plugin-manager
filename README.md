@@ -53,7 +53,7 @@ Alternatively if you are in a *NIX environment `npm test` will run the tests plu
 
 The code is available under the [MIT license](http://deif.mit-license.org/).
 
-[travis-image]: https://img.shields.io/travis/hmmdeif/thoughtpad-plugin-manager/master.svg?style=flat-square
-[travis-url]: https://travis-ci.org/hmmdeif/thoughtpad-plugin-manager
-[coveralls-image]: https://img.shields.io/coveralls/hmmdeif/thoughtpad-plugin-manager/master.svg?style=flat-square
-[coveralls-url]: https://coveralls.io/r/hmmdeif/thoughtpad-plugin-manager?branch=master
+[travis-image]: https://img.shields.io/travis/thoughtpad/thoughtpad-plugin-manager/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/thoughtpad/thoughtpad-plugin-manager
+[coveralls-image]: https://img.shields.io/coveralls/thoughtpad/thoughtpad-plugin-manager/master.svg?style=flat-square
+[coveralls-url]: https://coveralls.io/r/thoughtpad/thoughtpad-plugin-manager?branch=master
