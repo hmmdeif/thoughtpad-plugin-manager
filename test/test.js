@@ -16,7 +16,7 @@ describe("registering plugins", function () {
         co(function *() {
             yield thoughtpad.notify("an-event");
             done();
-        })();
+        }).catch(done);
     });
 
     it("should correctly subscribe to multiple thoughtpad plugins", function (done) {
@@ -28,7 +28,7 @@ describe("registering plugins", function () {
         co(function *() {
             yield thoughtpad.notify("an-event2");
             done();
-        })();
+        }).catch(done);
     });
 
     it("should reset all subscriptions on registration", function (done) {
@@ -43,7 +43,7 @@ describe("registering plugins", function () {
             yield thoughtpad.notify("an-event2");
             count.should.equal(1);
             done();
-        })();
+        }).catch(done);
     });
 
     it("should reset config object", function (done) {
@@ -58,7 +58,7 @@ describe("registering plugins", function () {
             yield thoughtpad.notify("an-event");
             thoughtpad.config.should.eql({});
             done();
-        })();
+        }).catch(done);
 
     });
 
@@ -84,7 +84,7 @@ describe("registering plugins", function () {
             yield thoughtpad.notify("an-event2");
             count.should.equal(3);
             done();
-        })();
+        }).catch(done);
     });
 
     it("should unsubscribe to multiple thoughtpad plugins", function (done) {
@@ -101,7 +101,7 @@ describe("registering plugins", function () {
             yield thoughtpad.notify("an-event2");
             contents.should.equal("unsubbed")
             done();
-        })();
+        }).catch(done);
     });
 
     it("should unsubscribe to specific thoughtpad plugins", function (done) {
@@ -122,7 +122,7 @@ describe("registering plugins", function () {
             yield thoughtpad.notify("an-event2");
             contents.should.equal("unsubbed");
             done();
-        })();
+        }).catch(done);
     });
 
 
